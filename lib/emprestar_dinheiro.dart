@@ -12,7 +12,7 @@ class EmprestarDinheiro extends StatefulWidget {
 }
 
 class _EmprestarDinheiroState extends State<EmprestarDinheiro> {
-  TextEditingController _loginController = TextEditingController();
+  TextEditingController _emailController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
   GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
@@ -24,7 +24,7 @@ class _EmprestarDinheiroState extends State<EmprestarDinheiro> {
 
 // INFORME OS DADOS - TEXTO
   void resetFields() {
-    _loginController.text = '';
+    _emailController.text = '';
     _passwordController.text = '';
     setState(() {
       // _result = 'Informe seus dados';
@@ -87,7 +87,7 @@ class _EmprestarDinheiroState extends State<EmprestarDinheiro> {
                     TextFormField(
                       keyboardType: TextInputType.text,
                       decoration: InputDecoration(labelText: 'Valor'),
-                      controller: _loginController,
+                      controller: _emailController,
                       validator: (text) {
                         return text.isEmpty ? "Insira o valor" : null;
                       },

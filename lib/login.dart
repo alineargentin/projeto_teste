@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:projeto_teste/cadastro.dart';
 import 'package:projeto_teste/menu.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+
 
 class Login extends StatefulWidget {
   @override
@@ -8,7 +10,7 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
-  TextEditingController _loginController = TextEditingController();
+  TextEditingController _emailController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
   GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
@@ -22,7 +24,7 @@ class _LoginState extends State<Login> {
 
 // INFORME OS DADOS - TEXTO
   void resetFields() {
-    _loginController.text = '';
+    _emailController.text = '';
     _passwordController.text = '';
     setState(() {
       _result = 'Informe seus dados';
@@ -30,11 +32,11 @@ class _LoginState extends State<Login> {
   }
 
   void doLogin() {
-    String login = _loginController.text;
+    String email = _emailController.text;
     String password = _passwordController.text;
 
     setState(() {
-      _result = "login: " + login + "\nSenha: " + password;
+      _result = "login: " + email + "\nSenha: " + password;
     });
   }
 
@@ -65,11 +67,11 @@ class _LoginState extends State<Login> {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: <Widget>[
                     TextFormField(
-                      keyboardType: TextInputType.text,
-                      decoration: InputDecoration(labelText: 'Login'),
-                      controller: _loginController,
+                      keyboardType: TextInputType.emailAddress,
+                      decoration: InputDecoration(labelText: 'E-mail'),
+                      controller: _emailController,
                       validator: (text) {
-                        return text.isEmpty ? "Insira seu login" : null;
+                        return text.isEmpty ? "Insira seu e-mail" : null;
                       },
                     ),
                     TextFormField(

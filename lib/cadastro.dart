@@ -1,4 +1,6 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class Cadastro extends StatefulWidget {
   @override
@@ -6,7 +8,7 @@ class Cadastro extends StatefulWidget {
 }
 
 class _CadastroState extends State<Cadastro> {
-  TextEditingController _loginController = TextEditingController();
+  TextEditingController _emailController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
   GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
@@ -20,7 +22,7 @@ class _CadastroState extends State<Cadastro> {
 
 // INFORME OS DADOS - TEXTO
   void resetFields() {
-    _loginController.text = '';
+    _emailController.text = '';
     _passwordController.text = '';
     setState(() {
       _result = 'Informe seus dados';
@@ -28,12 +30,12 @@ class _CadastroState extends State<Cadastro> {
   }
 
   void doLogin() {
-    String login = _loginController.text;
+    String email = _emailController.text;
     String password = _passwordController.text;
 
     setState(() {
       //TO DO não mudar o state, fazer o login no firebase
-      _result = "Cadastro: " + login + "\nSenha: " + password;
+      _result = "Cadastro: " + email + "\nSenha: " + password;
     });
   }
 
@@ -91,7 +93,7 @@ class _CadastroState extends State<Cadastro> {
                           return text.isEmpty ? "Insira seu Celular" : null;
                         }),
                     TextFormField(
-                        keyboardType: TextInputType.text,
+                        keyboardType: TextInputType.number,
                         obscureText: true,
                         decoration: InputDecoration(labelText: 'CPF'),
                         controller: _passwordController,
@@ -99,7 +101,7 @@ class _CadastroState extends State<Cadastro> {
                           return text.isEmpty ? "Insira seu CPF" : null;
                         }),
                          TextFormField(
-                      keyboardType: TextInputType.text,
+                      keyboardType: TextInputType.emailAddress,
                       obscureText: true,
                       decoration: InputDecoration(labelText: 'E-mail'),
                       controller: _passwordController,
@@ -138,5 +140,20 @@ class _CadastroState extends State<Cadastro> {
                             ))),
                   ],
                 ))));
+  }
+
+  void register(BuildContext context) async{
+    try{
+      FirebaseUser user = await FirebaseAuth.instance.createUserWithEmailAndPassword(email: _emailController, password: _passwordController);
+      if(user != null){
+        _emailController.text = '';
+        _passwordController.text = '';
+        
+      }
+    }catch(e){
+      print(e);
+      Scaffold.of(context).showSnackBar(SnackBar(content: Text("Falha na criação"), backgroundColor: Colors.redAccent,)); //SnakeBar
+
+    }
   }
 }
