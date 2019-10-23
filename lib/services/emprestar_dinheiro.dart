@@ -4,8 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:contacts_service/contacts_service.dart';
 
-import 'menu.dart';
-
 class EmprestarDinheiro extends StatefulWidget {
   @override
   _EmprestarDinheiroState createState() => _EmprestarDinheiroState();

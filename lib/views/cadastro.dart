@@ -1,17 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:projeto_teste/cadastro.dart';
-import 'package:projeto_teste/menu.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:projeto_teste/services/auth.dart';
+import 'package:projeto_teste/models/user.dart';
 
+class Cadastro extends StatefulWidget {
+  static const String routeName = '/cadastro';
 
-class Login extends StatefulWidget {
   @override
-  _LoginState createState() => _LoginState();
+  _CadastroState createState() => _CadastroState();
 }
 
-class _LoginState extends State<Login> {
-  TextEditingController _emailController = TextEditingController();
-  TextEditingController _passwordController = TextEditingController();
+class _CadastroState extends State<Cadastro> {
+  final _nameController = new TextEditingController();
+  final _emailController = new TextEditingController();
+  final _passwordController = new TextEditingController();
+  final _confirmPasswordController = new TextEditingController();
   GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   String _result;
@@ -36,7 +38,8 @@ class _LoginState extends State<Login> {
     String password = _passwordController.text;
 
     setState(() {
-      _result = "login: " + email + "\nSenha: " + password;
+      //TO DO não mudar o state, fazer o login no firebase
+      _result = "Cadastro: " + email + "\nSenha: " + password;
     });
   }
 
@@ -45,7 +48,7 @@ class _LoginState extends State<Login> {
     return Scaffold(
         appBar: AppBar(
           //TITULO DO PROJETO
-          title: Text('Carteira Virtual'),
+          title: Text('Cadastro'),
           //COR DO PROJETO
           backgroundColor: Colors.green,
           //ICONE PARA VOLTAR
@@ -66,23 +69,57 @@ class _LoginState extends State<Login> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: <Widget>[
-                    TextFormField(
-                      keyboardType: TextInputType.emailAddress,
-                      decoration: InputDecoration(labelText: 'E-mail'),
-                      controller: _emailController,
+                    /*TextFormField(
+                      keyboardType: TextInputType.text,
+                      decoration: InputDecoration(labelText: 'Nº do Cartão'),
+                      controller: _loginController,
                       validator: (text) {
-                        return text.isEmpty ? "Insira seu e-mail" : null;
+                        return text.isEmpty
+                            ? "Adicione o número do cartão"
+                            : null;
+                      },
+                    ),*/
+                    TextFormField(
+                      keyboardType: TextInputType.text,
+                      obscureText: true,
+                      decoration: InputDecoration(labelText: 'Nome'),
+                      controller: _passwordController,
+                      validator: (text) {
+                        return text.isEmpty ? "Insira seu nome!" : null;
                       },
                     ),
                     TextFormField(
+                        keyboardType: TextInputType.text,
+                        obscureText: true,
+                        decoration: InputDecoration(labelText: 'Celular'),
+                        controller: _passwordController,
+                        validator: (text) {
+                          return text.isEmpty ? "Insira seu Celular" : null;
+                        }),
+                    TextFormField(
+                        keyboardType: TextInputType.number,
+                        obscureText: true,
+                        decoration: InputDecoration(labelText: 'CPF'),
+                        controller: _passwordController,
+                        validator: (text) {
+                          return text.isEmpty ? "Insira seu CPF" : null;
+                        }),
+                         TextFormField(
+                      keyboardType: TextInputType.emailAddress,
+                      obscureText: true,
+                      decoration: InputDecoration(labelText: 'E-mail'),
+                      controller: _passwordController,
+                      validator: (text) {
+                        return text.isEmpty ? "Insira seu e-mail!" : null;
+                      }),
+                       TextFormField(
                       keyboardType: TextInputType.text,
                       obscureText: true,
                       decoration: InputDecoration(labelText: 'Senha'),
                       controller: _passwordController,
                       validator: (text) {
                         return text.isEmpty ? "Insira sua senha!" : null;
-                      },
-                    ),
+                      }),
                     Padding(
                       padding: EdgeInsets.only(top: 36.0),
                       child: Text(
@@ -98,33 +135,9 @@ class _LoginState extends State<Login> {
                             child: RaisedButton(
                               color: Colors.green,
                               onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => Menu()),
-                                );
                                 if (_formKey.currentState.validate()) {
                                   doLogin();
                                 }
-                              },
-                              child: Text('Login',
-                                  style: TextStyle(color: Colors.white)),
-                            ))),
-                    Padding(
-                        padding: EdgeInsets.symmetric(vertical: 20.0),
-                        child: Container(
-                            height: 50,
-                            //botao do cadastra-se
-                            child: RaisedButton(
-                              color: Colors.green,
-                              onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => Cadastro()),
-                                );
-                                // if (_formKey.currentState.validate()) {
-                                //  doLogin();
                               },
                               child: Text('Cadastrar',
                                   style: TextStyle(color: Colors.white)),
@@ -132,4 +145,5 @@ class _LoginState extends State<Login> {
                   ],
                 ))));
   }
+
 }
