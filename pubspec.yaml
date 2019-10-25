@@ -27,12 +27,9 @@ dependencies:
   cloud_firestore: ^0.12.9+5
   shared_preferences: ^0.5.3+4
   flutter_launcher_icons: ^0.7.3
+  splashscreen: ^1.2.0
 
-  flutter_icons:
-  android: true 
-  ios: true
-  image_path: "assets/logo.png"
-
+  
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -57,7 +54,7 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-    - assets/logo.png
+    - assets/icon/logo.png
   #  - images/a_dot_burr.jpeg
   #  - images/a_dot_ham.jpeg
 
@@ -86,3 +83,8 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
+flutter_icons:
+  android: true 
+  ios: true
+  image_path: "assets/icon/logo.png"
+
