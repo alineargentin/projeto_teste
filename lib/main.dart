@@ -4,7 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:splashscreen/splashscreen.dart';
 
 void main() => runApp(MaterialApp(
-      home: Login(),
+      home: MyHomePage(),
       debugShowCheckedModeBanner: false,
     ));
 
