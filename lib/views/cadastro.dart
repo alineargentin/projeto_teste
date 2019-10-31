@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:projeto_teste/services/auth.dart';
 import 'package:projeto_teste/models/user.dart';
+import 'package:projeto_teste/views/login.dart';
 
 class Cadastro extends StatefulWidget {
   static const String routeName = '/cadastro';
@@ -14,136 +15,129 @@ class _CadastroState extends State<Cadastro> {
   final _emailController = new TextEditingController();
   final _passwordController = new TextEditingController();
   final _confirmPasswordController = new TextEditingController();
-  GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-
-  String _result;
-
-  @override
-  void initState() {
-    super.initState();
-    resetFields();
-  }
-
-// INFORME OS DADOS - TEXTO
-  void resetFields() {
-    _emailController.text = '';
-    _passwordController.text = '';
-    setState(() {
-      _result = 'Informe seus dados';
-    });
-  }
-
-  void doLogin() {
-    String email = _emailController.text;
-    String password = _passwordController.text;
-
-    setState(() {
-      //TO DO não mudar o state, fazer o login no firebase
-      _result = "Cadastro: " + email + "\nSenha: " + password;
-    });
-  }
+  final _phoneController = new TextEditingController();
+  final _cpfController = new TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          //TITULO DO PROJETO
-          title: Text('Cadastro'),
-          //COR DO PROJETO
-          backgroundColor: Colors.green,
-          //ICONE PARA VOLTAR
-          actions: <Widget>[
-            IconButton(
-              icon: Icon(Icons.refresh),
-              onPressed: () {
-                resetFields();
-              },
-            )
-          ],
+      body: Center(
+        child: SingleChildScrollView(
+          padding: EdgeInsets.all(20.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: <Widget>[
+              _showNameTextField(),
+              _showEmailTextField(),
+              _showPasswordTextField(),
+              _showConfirmPasswordTextField(),
+              _showPhoneTextField(),
+              _showCPFTextField(),
+              _showSignUpButton(),
+              _showSignInButton(),
+            ],
+          ),
         ),
-        backgroundColor: Colors.white,
-        body: SingleChildScrollView(
-            padding: EdgeInsets.all(20.0),
-            child: Form(
-                key: _formKey,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: <Widget>[
-                    /*TextFormField(
-                      keyboardType: TextInputType.text,
-                      decoration: InputDecoration(labelText: 'Nº do Cartão'),
-                      controller: _loginController,
-                      validator: (text) {
-                        return text.isEmpty
-                            ? "Adicione o número do cartão"
-                            : null;
-                      },
-                    ),*/
-                    TextFormField(
-                      keyboardType: TextInputType.text,
-                      obscureText: true,
-                      decoration: InputDecoration(labelText: 'Nome'),
-                      controller: _passwordController,
-                      validator: (text) {
-                        return text.isEmpty ? "Insira seu nome!" : null;
-                      },
-                    ),
-                    TextFormField(
-                        keyboardType: TextInputType.text,
-                        obscureText: true,
-                        decoration: InputDecoration(labelText: 'Celular'),
-                        controller: _passwordController,
-                        validator: (text) {
-                          return text.isEmpty ? "Insira seu Celular" : null;
-                        }),
-                    TextFormField(
-                        keyboardType: TextInputType.number,
-                        obscureText: true,
-                        decoration: InputDecoration(labelText: 'CPF'),
-                        controller: _passwordController,
-                        validator: (text) {
-                          return text.isEmpty ? "Insira seu CPF" : null;
-                        }),
-                         TextFormField(
-                      keyboardType: TextInputType.emailAddress,
-                      obscureText: true,
-                      decoration: InputDecoration(labelText: 'E-mail'),
-                      controller: _passwordController,
-                      validator: (text) {
-                        return text.isEmpty ? "Insira seu e-mail!" : null;
-                      }),
-                       TextFormField(
-                      keyboardType: TextInputType.text,
-                      obscureText: true,
-                      decoration: InputDecoration(labelText: 'Senha'),
-                      controller: _passwordController,
-                      validator: (text) {
-                        return text.isEmpty ? "Insira sua senha!" : null;
-                      }),
-                    Padding(
-                      padding: EdgeInsets.only(top: 36.0),
-                      child: Text(
-                        _result,
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
-                    Padding(
-                        padding: EdgeInsets.symmetric(vertical: 36.0),
-                        child: Container(
-                            height: 50,
-                            //botao do login
-                            child: RaisedButton(
-                              color: Colors.green,
-                              onPressed: () {
-                                if (_formKey.currentState.validate()) {
-                                  doLogin();
-                                }
-                              },
-                              child: Text('Cadastrar',
-                                  style: TextStyle(color: Colors.white)),
-                            ))),
-                  ],
-                ))));
+      ),
+    );
   }
+
+Widget _showNameTextField() {
+    return TextField(
+      controller: _nameController,
+      keyboardType: TextInputType.text,
+      decoration: InputDecoration(
+        hintText: 'Nome',
+        prefixIcon: Icon(Icons.email),
+      ),
+    );
+  }
+
+  Widget _showEmailTextField() {
+    return TextField(
+      controller: _emailController,
+      keyboardType: TextInputType.emailAddress,
+      decoration: InputDecoration(
+        hintText: 'Email',
+        prefixIcon: Icon(Icons.email),
+      ),
+    );
+  }
+
+  Widget _showPasswordTextField() {
+    return TextField(
+      controller: _passwordController,
+      keyboardType: TextInputType.text,
+      obscureText: true,
+      decoration: InputDecoration(
+        hintText: 'Senha',
+        prefixIcon: Icon(Icons.vpn_key),
+      ),
+    );
+  }
+
+   Widget _showConfirmPasswordTextField() {
+    return TextField(
+      controller: _confirmPasswordController,
+      keyboardType: TextInputType.text,
+      obscureText: true,
+      decoration: InputDecoration(
+        hintText: 'Confirmar senha',
+        prefixIcon: Icon(Icons.vpn_key),
+      ),
+    );
+  }
+
+Widget _showPhoneTextField() {
+    return TextField(
+      controller: _phoneController,
+      keyboardType: TextInputType.number,
+      obscureText: true,
+      decoration: InputDecoration(
+        hintText: 'Celular',
+        prefixIcon: Icon(Icons.vpn_key),
+      ),
+    );
+  }
+
+Widget _showCPFTextField() {
+    return TextField(
+      controller: _cpfController,
+      keyboardType: TextInputType.number,
+      obscureText: true,
+      decoration: InputDecoration(
+        hintText: 'CPF',
+        prefixIcon: Icon(Icons.vpn_key),
+      ),
+    );
+  }
+
+Future _signUp() async {
+    final email = _emailController.text;
+    final password = _passwordController.text;
+    await Auth.signUp(email, password).then(_onResultSignUpSuccess);
+  }
+  void _onResultSignUpSuccess(String userId) {
+    final email = _emailController.text;
+    final name = _nameController.text;
+    final user = User(userId: userId, name: name, email: email);
+    Auth.addUser(user);
+  }
+
+  Widget _showSignUpButton() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 32.0),
+      child: RaisedButton(child: Text('Cadastrar'), onPressed: _signUp),
+    );
+  }
+
+  void _signIn() {
+    Navigator.of(context).pushReplacementNamed(Login.routeName);
+  }
+
+  Widget _showSignInButton() {
+    return FlatButton(child: Text('Login'), onPressed: _signIn);
+  }
+
 
 }

@@ -1,11 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:projeto_teste/views/cadastro.dart';
 import 'package:projeto_teste/views/login.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:splashscreen/splashscreen.dart';
 
 void main() => runApp(MaterialApp(
-      home: MyHomePage(),
+      
       debugShowCheckedModeBanner: false,
+       initialRoute: '/',
+      routes: <String, WidgetBuilder>{
+Cadastro.routeName:(context) => new Cadastro(),
+Login.routeName:(context) => new Login(),
+      },
+      home: MyHomePage(),
     ));
 
     
@@ -52,6 +59,4 @@ Widget _introScreen() {
     ],
   );
 }
-
-
 
