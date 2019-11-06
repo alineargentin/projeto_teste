@@ -17,6 +17,7 @@ class _CadastroState extends State<Cadastro> {
   final _confirmPasswordController = new TextEditingController();
   final _phoneController = new TextEditingController();
   final _cpfController = new TextEditingController();
+  final _cartaoController = new TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -33,8 +34,8 @@ class _CadastroState extends State<Cadastro> {
               _showConfirmPasswordTextField(),
               _showPhoneTextField(),
               _showCPFTextField(),
+              _showCartaoTextField(),
               _showSignUpButton(),
-              _showSignInButton(),
             ],
           ),
         ),
@@ -48,7 +49,7 @@ Widget _showNameTextField() {
       keyboardType: TextInputType.text,
       decoration: InputDecoration(
         hintText: 'Nome',
-        prefixIcon: Icon(Icons.email),
+        prefixIcon: Icon(Icons.person),
       ),
     );
   }
@@ -92,10 +93,9 @@ Widget _showPhoneTextField() {
     return TextField(
       controller: _phoneController,
       keyboardType: TextInputType.number,
-      obscureText: true,
       decoration: InputDecoration(
         hintText: 'Celular',
-        prefixIcon: Icon(Icons.vpn_key),
+        prefixIcon: Icon(Icons.phone_android),
       ),
     );
   }
@@ -104,13 +104,24 @@ Widget _showCPFTextField() {
     return TextField(
       controller: _cpfController,
       keyboardType: TextInputType.number,
-      obscureText: true,
       decoration: InputDecoration(
         hintText: 'CPF',
-        prefixIcon: Icon(Icons.vpn_key),
+        prefixIcon: Icon(Icons.tab),
       ),
     );
   }
+
+Widget _showCartaoTextField() {
+    return TextField(
+      controller: _cartaoController,
+      keyboardType: TextInputType.number,
+      decoration: InputDecoration(
+        hintText: 'Cartão de Crédito',
+        prefixIcon: Icon(Icons.credit_card),
+      ),
+    );
+  }
+  
 
 Future _signUp() async {
     final email = _emailController.text;
@@ -122,6 +133,7 @@ Future _signUp() async {
     final name = _nameController.text;
     final user = User(userId: userId, name: name, email: email);
     Auth.addUser(user);
+    Navigator.of(context).pushReplacementNamed(Login.routeName);
   }
 
   Widget _showSignUpButton() {
@@ -130,14 +142,4 @@ Future _signUp() async {
       child: RaisedButton(child: Text('Cadastrar'), onPressed: _signUp),
     );
   }
-
-  void _signIn() {
-    Navigator.of(context).pushReplacementNamed(Login.routeName);
-  }
-
-  Widget _showSignInButton() {
-    return FlatButton(child: Text('Login'), onPressed: _signIn);
-  }
-
-
 }

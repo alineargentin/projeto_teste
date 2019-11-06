@@ -1,7 +1,7 @@
   import 'package:flutter/material.dart';
   final ThemeData myTheme = ThemeData(
-    primarySwatch: Colors.deepPurple,
-    brightness: Brightness.light,
+    primarySwatch: Colors.green,
+    brightness: Brightness.dark,
     primaryColor: Color( 0xff673ab7 ),
     primaryColorBrightness: Brightness.dark,
     primaryColorLight: Color( 0xffd1c4e9 ),

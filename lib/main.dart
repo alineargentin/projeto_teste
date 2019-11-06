@@ -38,13 +38,13 @@ Widget _introScreen() {
   return Stack(
     children: <Widget>[
       SplashScreen(
-        seconds: 5,
+        seconds: 3,
         gradientBackground: LinearGradient(
           begin: Alignment.topRight,
           end: Alignment.bottomLeft,
           colors: [
-            Color(0xffED213A),
-            Color(0xff93291E)
+            Color(0xff2e8b57),
+            Color(0xff2e8b57)
           ],
         ),
         navigateAfterSeconds: Login(),
@@ -53,7 +53,7 @@ Widget _introScreen() {
       Container(
         decoration: BoxDecoration(
           image: DecorationImage(
-            image: AssetImage("assets/icon/logo.png"),
+            image: AssetImage("assets/icon/splashscreen.png"),
             fit: BoxFit.none,
           ),
         ),
