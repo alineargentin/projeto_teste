@@ -1,22 +1,32 @@
 import 'dart:convert';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class User {
   String userId;
   String name;
   String email;
-  String phone;
   String cpf;
+  String phone;
+  String card;
   String profilePictureUrl;
 
   User({
     this.userId,
     this.name,
     this.email,
-    this.phone,
     this.cpf,
+    this.phone,
+    this.card,
     this.profilePictureUrl,
   });
+
+   String getInitials() {
+    if (name != null)
+      return name.toUpperCase()[0];
+    else
+      return '?';
+  }
 
   factory User.fromDocument(DocumentSnapshot document) {
     return User.fromMap(document.data);
@@ -33,8 +43,9 @@ class User {
         profilePictureUrl: json["profilePictureURL"] == null
             ? null
             : json["profilePictureURL"],
-        phone: json["phone"] == null ? null : json["phone"],
-        cpf: json["cpf"] == null ? null : json["cpf"],
+        cpf:  json["cpf"] == null ? null : json["cpf"],
+        phone: json["phone"] == null ? null : json["phone"], 
+        card:  json["card"] == null ? null : json["card"], 
       );
 
   Map<String, dynamic> toMap() => {
@@ -43,7 +54,8 @@ class User {
         "email": email == null ? null : email,
         "profilePictureURL":
             profilePictureUrl == null ? null : profilePictureUrl,
-        "phone" : phone == null ? null : phone,
-         "cpf" : cpf == null ? null :cpf,   
+        "cpf":  cpf == null ? null : cpf,
+        "phone": phone == null ? null : phone,
+        "card": card == null ? null : card,
       };
 }

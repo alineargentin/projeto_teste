@@ -90,7 +90,7 @@ Widget _showEmailTextField() {
   }
 
   Widget _showSignUpButton() {
-    return FlatButton(child: Text('Cadastre-se'), onPressed: _signUp);
+    return RaisedButton(child: Text('Cadastre-se'), onPressed: _signUp);
   }
 
 }

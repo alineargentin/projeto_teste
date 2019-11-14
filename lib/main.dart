@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:projeto_teste/views/emprestar_dinheiro.dart';
+import 'package:projeto_teste/views/pagamento.dart';
 import 'package:projeto_teste/views/cadastro.dart';
 import 'package:projeto_teste/views/login.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:projeto_teste/views/menu.dart';
+import 'package:projeto_teste/views/perfil.dart';
+import 'package:projeto_teste/views/sobre.dart';
+import 'package:projeto_teste/views/termo.dart';
 import 'package:splashscreen/splashscreen.dart';
 
 void main() => runApp(MaterialApp(
@@ -13,7 +19,22 @@ void main() => runApp(MaterialApp(
 Cadastro.routeName:(context) => new Cadastro(),
 Login.routeName:(context) => new Login(),
 Menu.routeName:(context) => new Menu(),
-      },
+Termo.routeName:(context) => new Termo(),
+Perfil.routeName:(context) => new Perfil(),
+Sobre.routeName:(context) => new Sobre(),
+EmprestarDinheiro.routeName:(context) => new EmprestarDinheiro(),
+Pagamento.routeName:(context) => new Pagamento(),
+
+}, localizationsDelegates: [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: [
+        const Locale('pt'), 
+        const Locale('en'), 
+        const Locale('es'), 
+      ],
       home: MyHomePage(),
     ));
 
@@ -48,7 +69,7 @@ Widget _introScreen() {
           ],
         ),
         navigateAfterSeconds: Login(),
-        loaderColor: Colors.transparent,
+        loaderColor: Colors.green,
       ),
       Container(
         decoration: BoxDecoration(
@@ -60,5 +81,6 @@ Widget _introScreen() {
       ),
     ],
   );
+  
 }
 

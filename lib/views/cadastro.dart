@@ -93,6 +93,7 @@ Widget _showPhoneTextField() {
     return TextField(
       controller: _phoneController,
       keyboardType: TextInputType.number,
+      maxLength: 9,
       decoration: InputDecoration(
         hintText: 'Celular',
         prefixIcon: Icon(Icons.phone_android),
@@ -104,9 +105,10 @@ Widget _showCPFTextField() {
     return TextField(
       controller: _cpfController,
       keyboardType: TextInputType.number,
+      maxLength: 11,
       decoration: InputDecoration(
         hintText: 'CPF',
-        prefixIcon: Icon(Icons.tab),
+        prefixIcon: Icon(Icons.description),
       ),
     );
   }
@@ -115,6 +117,7 @@ Widget _showCartaoTextField() {
     return TextField(
       controller: _cartaoController,
       keyboardType: TextInputType.number,
+      maxLength: 16,
       decoration: InputDecoration(
         hintText: 'Cartão de Crédito',
         prefixIcon: Icon(Icons.credit_card),
