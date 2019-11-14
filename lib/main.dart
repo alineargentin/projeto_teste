@@ -38,8 +38,6 @@ Pagamento.routeName:(context) => new Pagamento(),
       home: MyHomePage(),
     ));
 
-    
-
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key key, this.title}) : super(key: key);
   final String title;

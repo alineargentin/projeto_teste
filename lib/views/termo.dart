@@ -24,6 +24,6 @@ class _TermoState extends State<Termo> {
   }
 
   Widget _buildBody() {
-    return Center(child: Text('Em construção!'));
+    return Center(child: Text(''));
   }
 }

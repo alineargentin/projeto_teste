@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:projeto_teste/widget/custom_drawer.dart';
 
 class Perfil extends StatefulWidget {
-  static const String routeName = '/profile';
+  static const String routeName = '/perfil';
   @override
   _PerfilState createState() => _PerfilState();
 }
