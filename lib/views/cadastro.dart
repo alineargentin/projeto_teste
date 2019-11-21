@@ -1,7 +1,7 @@
+import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:projeto_teste/services/auth.dart';
 import 'package:projeto_teste/models/user.dart';
-import 'package:projeto_teste/views/login.dart';
 
 class Cadastro extends StatefulWidget {
   static const String routeName = '/cadastro';
@@ -17,7 +17,13 @@ class _CadastroState extends State<Cadastro> {
   final _confirmPasswordController = new TextEditingController();
   final _phoneController = new TextEditingController();
   final _cpfController = new TextEditingController();
-  final _cartaoController = new TextEditingController();
+
+  final _nameFocusNode = new FocusNode();
+  final _emailFocusNode = new FocusNode();
+  final _passwordFocusNode = new FocusNode();
+  final _confirmPasswordFocusNode = new FocusNode();
+  final _phoneFocusNode = new FocusNode();
+  final _cpfFocusNode = new FocusNode();
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +40,6 @@ class _CadastroState extends State<Cadastro> {
               _showConfirmPasswordTextField(),
               _showPhoneTextField(),
               _showCPFTextField(),
-              _showCartaoTextField(),
               _showSignUpButton(),
             ],
           ),
@@ -45,28 +50,37 @@ class _CadastroState extends State<Cadastro> {
 
 Widget _showNameTextField() {
     return TextField(
-      controller: _nameController,
+       controller: _nameController,
       keyboardType: TextInputType.text,
       decoration: InputDecoration(
         hintText: 'Nome',
         prefixIcon: Icon(Icons.person),
       ),
+      textInputAction: TextInputAction.next,
+      autofocus: true,
+      focusNode: _nameFocusNode,
+      onEditingComplete: () =>
+          FocusScope.of(context).requestFocus(_emailFocusNode),
     );
   }
 
   Widget _showEmailTextField() {
-    return TextField(
+     return TextFormField(
       controller: _emailController,
       keyboardType: TextInputType.emailAddress,
       decoration: InputDecoration(
         hintText: 'Email',
         prefixIcon: Icon(Icons.email),
       ),
+      textInputAction: TextInputAction.next,
+      focusNode: _emailFocusNode,
+      onEditingComplete: () =>
+          FocusScope.of(context).requestFocus(_passwordFocusNode),
     );
   }
 
   Widget _showPasswordTextField() {
-    return TextField(
+    return TextFormField(
       controller: _passwordController,
       keyboardType: TextInputType.text,
       obscureText: true,
@@ -74,11 +88,15 @@ Widget _showNameTextField() {
         hintText: 'Senha',
         prefixIcon: Icon(Icons.vpn_key),
       ),
+      textInputAction: TextInputAction.next,
+      focusNode: _passwordFocusNode,
+      onEditingComplete: () =>
+          FocusScope.of(context).requestFocus(_confirmPasswordFocusNode),
     );
   }
 
    Widget _showConfirmPasswordTextField() {
-    return TextField(
+     return TextFormField(
       controller: _confirmPasswordController,
       keyboardType: TextInputType.text,
       obscureText: true,
@@ -86,6 +104,10 @@ Widget _showNameTextField() {
         hintText: 'Confirmar senha',
         prefixIcon: Icon(Icons.vpn_key),
       ),
+      textInputAction: TextInputAction.next,
+      focusNode: _confirmPasswordFocusNode,
+       onEditingComplete: () =>
+          FocusScope.of(context).requestFocus(_phoneFocusNode)
     );
   }
 
@@ -93,11 +115,15 @@ Widget _showPhoneTextField() {
     return TextField(
       controller: _phoneController,
       keyboardType: TextInputType.number,
-      maxLength: 9,
+      maxLength: 11,
       decoration: InputDecoration(
         hintText: 'Celular',
-        prefixIcon: Icon(Icons.phone_android),
+        prefixIcon: Icon(Icons.phone),
       ),
+       textInputAction: TextInputAction.next,
+      focusNode: _phoneFocusNode,
+      onEditingComplete: () =>
+          FocusScope.of(context).requestFocus(_cpfFocusNode)
     );
   }
 
@@ -110,33 +136,40 @@ Widget _showCPFTextField() {
         hintText: 'CPF',
         prefixIcon: Icon(Icons.description),
       ),
+      textInputAction: TextInputAction.next,
+      focusNode: _cpfFocusNode,
     );
   }
 
-Widget _showCartaoTextField() {
-    return TextField(
-      controller: _cartaoController,
-      keyboardType: TextInputType.number,
-      maxLength: 16,
-      decoration: InputDecoration(
-        hintText: 'Cartão de Crédito',
-        prefixIcon: Icon(Icons.credit_card),
-      ),
-    );
-  }
-  
-
-Future _signUp() async {
+ Future _signUp() async {
     final email = _emailController.text;
     final password = _passwordController.text;
-    await Auth.signUp(email, password).then(_onResultSignUpSuccess);
+    await Auth.signUp(email, password)
+        .then(_onResultSignUpSuccess)
+        .catchError((error) {
+      Flushbar(
+        title: 'Erro',
+        message: error.toString(),
+        duration: Duration(seconds: 3),
+      )..show(context);
+    });
   }
+  
   void _onResultSignUpSuccess(String userId) {
     final email = _emailController.text;
     final name = _nameController.text;
-    final user = User(userId: userId, name: name, email: email);
-    Auth.addUser(user);
-    Navigator.of(context).pushReplacementNamed(Login.routeName);
+    final phone = _phoneController.text;
+    final cpf = _cpfController.text;
+    final user = User(userId: userId, name: name, email: email, phone: phone, cpf: cpf);
+    Auth.addUser(user).then(_onResultAddUser);
+  }
+
+   void _onResultAddUser(result) {
+    Flushbar(
+      title: 'Novo usuário',
+      message: 'Usuário registrado com sucesso!',
+      duration: Duration(seconds: 2),
+    )..show(context);
   }
 
   Widget _showSignUpButton() {

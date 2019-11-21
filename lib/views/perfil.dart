@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:projeto_teste/widget/custom_drawer.dart';
+import 'package:projeto_teste/models/user.dart';
 
 class Perfil extends StatefulWidget {
   static const String routeName = '/perfil';
@@ -8,6 +9,7 @@ class Perfil extends StatefulWidget {
 }
 
 class _PerfilState extends State<Perfil> {
+  User _user = new User();
 
   @override
   Widget build(BuildContext context) {
@@ -30,17 +32,17 @@ class _PerfilState extends State<Perfil> {
       child: Form(
         child: Column(
           children: <Widget>[
-            _createNameTextField(),
+            _showHeader(),
           ],
         ),
       ),
     );
   }
 
-  Widget _createNameTextField() {
-    return TextFormField(
-      decoration: InputDecoration(labelText: 'Nome', icon: Icon(Icons.person)),
+  Widget _showHeader() {
+    return UserAccountsDrawerHeader(
+      accountName: Text(_user?.name ?? ""),
+      accountEmail: Text(_user?.email ?? ""), 
     );
   }
-
 }

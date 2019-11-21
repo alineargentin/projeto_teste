@@ -11,21 +11,33 @@ import 'package:projeto_teste/views/sobre.dart';
 import 'package:projeto_teste/views/termo.dart';
 import 'package:splashscreen/splashscreen.dart';
 
-void main() => runApp(MaterialApp(
-      
-      debugShowCheckedModeBanner: false,
-       initialRoute: '/',
-      routes: <String, WidgetBuilder>{
-Cadastro.routeName:(context) => new Cadastro(),
-Login.routeName:(context) => new Login(),
-Menu.routeName:(context) => new Menu(),
-Termo.routeName:(context) => new Termo(),
-Perfil.routeName:(context) => new Perfil(),
-Sobre.routeName:(context) => new Sobre(),
-EmprestarDinheiro.routeName:(context) => new EmprestarDinheiro(),
-Pagamento.routeName:(context) => new Pagamento(),
+void main() {
+  runApp(MyApp());
+}
 
-}, localizationsDelegates: [
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Carteira Virtual',
+      theme: new ThemeData(
+        primarySwatch: Colors.green
+      ),
+      debugShowCheckedModeBanner: false,
+      home: MyHomePage(),
+      
+      initialRoute: '/',
+      routes: <String, WidgetBuilder>{
+       Cadastro.routeName:(context) => new Cadastro(),
+       Login.routeName:(context) => new Login(),
+       Menu.routeName:(context) => new Menu(),
+       Termo.routeName:(context) => new Termo(),
+       Perfil.routeName:(context) => new Perfil(),
+       Sobre.routeName:(context) => new Sobre(),
+       EmprestarDinheiro.routeName:(context) => new EmprestarDinheiro(),
+       Pagamento.routeName:(context) => new Pagamento(),
+      },
+      localizationsDelegates: [
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
@@ -35,8 +47,10 @@ Pagamento.routeName:(context) => new Pagamento(),
         const Locale('en'), 
         const Locale('es'), 
       ],
-      home: MyHomePage(),
-    ));
+    );
+
+  }
+}
 
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key key, this.title}) : super(key: key);

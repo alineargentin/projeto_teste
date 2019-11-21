@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class User {
@@ -8,8 +7,7 @@ class User {
   String email;
   String cpf;
   String phone;
-  String card;
-  String profilePictureUrl;
+  int saldo = 1000;
 
   User({
     this.userId,
@@ -17,8 +15,7 @@ class User {
     this.email,
     this.cpf,
     this.phone,
-    this.card,
-    this.profilePictureUrl,
+    this.saldo,
   });
 
    String getInitials() {
@@ -40,22 +37,17 @@ class User {
         userId: json["userID"] == null ? null : json["userID"],
         name: json["name"] == null ? null : json["name"],
         email: json["email"] == null ? null : json["email"],
-        profilePictureUrl: json["profilePictureURL"] == null
-            ? null
-            : json["profilePictureURL"],
         cpf:  json["cpf"] == null ? null : json["cpf"],
-        phone: json["phone"] == null ? null : json["phone"], 
-        card:  json["card"] == null ? null : json["card"], 
+        phone: json["phone"] == null ? null : json["phone"],
+        saldo: json["saldo"] == null ? null : json["saldo"],
       );
 
   Map<String, dynamic> toMap() => {
         "userID": userId == null ? null : userId,
         "name": name == null ? null : name,
         "email": email == null ? null : email,
-        "profilePictureURL":
-            profilePictureUrl == null ? null : profilePictureUrl,
         "cpf":  cpf == null ? null : cpf,
         "phone": phone == null ? null : phone,
-        "card": card == null ? null : card,
+        "saldo": saldo == null ? null : saldo,
       };
 }

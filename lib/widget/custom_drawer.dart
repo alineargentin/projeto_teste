@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:projeto_teste/services/auth.dart';
 import 'package:projeto_teste/models/user.dart';
+import 'package:projeto_teste/services/auth.dart';
 import 'package:projeto_teste/views/emprestar_dinheiro.dart';
 import 'package:projeto_teste/views/pagamento.dart';
 import 'package:projeto_teste/utils/common.dart';
@@ -36,7 +36,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
         children: <Widget>[
           _showHeader(),
           ListTile(
-            leading: Icon(Icons.dashboard),
+            leading: Icon(Icons.person),
             title: Text('Perfil'),
             onTap: () {
               Navigator.pop(context);

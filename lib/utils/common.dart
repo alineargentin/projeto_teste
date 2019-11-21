@@ -18,14 +18,14 @@ class Common {
           content: Text("Você realmente deseja sair do aplicativo?"),
           actions: <Widget>[
             FlatButton(
-              child: Text("SIM"),
+              child: Text("Sim"),
               onPressed: () {
                 Auth.signOut();
                 Navigator.pushReplacementNamed(context, Login.routeName);
               },
             ),
             FlatButton(
-              child: Text("NÃO"),
+              child: Text("Não"),
               onPressed: () {
                 Navigator.of(context).pop();
               },

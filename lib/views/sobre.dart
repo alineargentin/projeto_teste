@@ -19,11 +19,11 @@ class _SobreState extends State<Sobre> {
 
   Widget _buildAppBar() {
     return AppBar(
-      title: Text('Sobre o projeto'),
+      title: Text('Sobre o aplicativo'),
     );
   }
 
   Widget _buildBody() {
-    return Center(child: Text('Em construção!'));
+    return Center(child: Text('O aplicativo Carteira Virtual foi criado para facilitar empréstimos entre amigos'));
   }
 }

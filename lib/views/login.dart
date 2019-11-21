@@ -1,7 +1,9 @@
+import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:projeto_teste/services/auth.dart';
 import 'package:projeto_teste/views/cadastro.dart';
 import 'package:projeto_teste/views/menu.dart';
+
 
 class Login extends StatefulWidget {
 static const String routeName = '/login';
@@ -67,15 +69,25 @@ Widget _showEmailTextField() {
     );
   }
 
-  Future _signIn() async {
+  Future<void> _signIn() async {
     final email = _emailController.text;
     final password = _passwordController.text;
-    await Auth.signIn(email, password).then(_onResultSignInSuccess);
+    await Auth.signIn(email, password)
+        .then(_onSignInSuccess)
+        .catchError((error) {
+      print('Caught error: $error');
+      Flushbar(
+        title: 'Erro',
+        message: error.toString(),
+        duration: Duration(seconds: 3),
+      )..show(context);
+    });
   }
 
-  void _onResultSignInSuccess(String userId) {
-    print('SignIn: $userId');
-    Navigator.of(context).pushReplacementNamed(Menu.routeName);
+  Future _onSignInSuccess(String userId) async {
+    final user = await Auth.getUser(userId);
+    await Auth.storeUserLocal(user);
+    Navigator.pushReplacementNamed(context, Menu.routeName);
   }
 
   Widget _showSignInButton() {
