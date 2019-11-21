@@ -14,6 +14,7 @@ class Pagamento extends StatefulWidget {
 
 class _PagamentoState extends State<Pagamento> {
    User _currentUser;
+   Emprestimo _emprestimo;
 
 @override
   void initState() {
@@ -71,10 +72,15 @@ class _PagamentoState extends State<Pagamento> {
   }
 
   Widget _buildCard(document) {
-    final emprestimo = Emprestimo.fromDocument(document);
+     _emprestimo = Emprestimo.fromDocument(document);
     return ListTile(
-      title: Text(emprestimo?.valor ?? ''),
-    );
+      title: Text(_emprestimo?.valor ?? ''),
+       onTap: _pagar,
+           );
+         }
+       
+       
+         void _pagar() {
+         _currentUser.saldo - _emprestimo.valor;
   }
-
 }

@@ -218,7 +218,7 @@ return StreamBuilder<QuerySnapshot>(
               {
                 setState((){
                   _sel5 = resp5;
-                  _valoremprestimo =5;
+                  _valoremprestimo = 5;
                   _sel100 = false;
                   _sel50 = false;
                   _sel20 = false;
