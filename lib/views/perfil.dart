@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:projeto_teste/widget/custom_drawer.dart';
 import 'package:projeto_teste/models/user.dart';
+import 'package:projeto_teste/services/auth.dart';
+import 'package:projeto_teste/widget/custom_drawer.dart';
 
 class Perfil extends StatefulWidget {
   static const String routeName = '/perfil';
@@ -9,7 +10,18 @@ class Perfil extends StatefulWidget {
 }
 
 class _PerfilState extends State<Perfil> {
-  User _user = new User();
+User _currentUser;
+
+  @override
+  void initState() {
+    super.initState();
+    Auth.getUserLocal().then((user) {
+      setState(() {
+        _currentUser = user;
+        print('Current user: ${_currentUser.toJson()}');
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,23 +38,22 @@ class _PerfilState extends State<Perfil> {
     );
   }
 
-  Widget _buildBody() {
+   Widget _buildBody() {
     return Container(
       padding: EdgeInsets.all(10.0),
       child: Form(
         child: Column(
           children: <Widget>[
-            _showHeader(),
+            _createNameTextField(),
           ],
         ),
       ),
     );
   }
 
-  Widget _showHeader() {
-    return UserAccountsDrawerHeader(
-      accountName: Text(_user?.name ?? ""),
-      accountEmail: Text(_user?.email ?? ""), 
+  Widget _createNameTextField() {
+    return TextFormField(
+      decoration: InputDecoration(labelText: _currentUser.name , icon: Icon(Icons.person)),
     );
   }
 }

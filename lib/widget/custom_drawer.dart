@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:projeto_teste/models/user.dart';
 import 'package:projeto_teste/services/auth.dart';
-import 'package:projeto_teste/views/emprestar_dinheiro.dart';
 import 'package:projeto_teste/views/pagamento.dart';
 import 'package:projeto_teste/utils/common.dart';
 import 'package:projeto_teste/views/login.dart';
@@ -44,14 +43,6 @@ class _CustomDrawerState extends State<CustomDrawer> {
             },
           ),
           Divider(),
-          ListTile(
-            leading: Icon(Icons.attach_money),
-            title: Text('Empréstimo'),
-            onTap: () {
-              Navigator.pop(context);
-              Navigator.of(context).pushReplacementNamed(EmprestarDinheiro.routeName);
-            },
-          ),
           ListTile(
             leading: Icon(Icons.payment),
             title: Text('Pagamento'),

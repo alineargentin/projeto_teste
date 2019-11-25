@@ -1,22 +1,26 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:projeto_teste/models/emprestimo.dart';
+import 'package:projeto_teste/models/boleto.dart';
 import 'package:projeto_teste/models/user.dart';
 import 'package:projeto_teste/services/auth.dart';
 import 'package:projeto_teste/utils/common.dart';
 import 'package:projeto_teste/widget/custom_drawer.dart';
 
+import 'boleto_cadastro.dart';
+
 class Pagamento extends StatefulWidget {
   static const String routeName = 'pagamento';
-  @override
+  
   _PagamentoState createState() => _PagamentoState();
 }
 
 class _PagamentoState extends State<Pagamento> {
-   User _currentUser;
-   Emprestimo _emprestimo;
+ 
+  
+  User _currentUser;
+  Boleto _boleto;
 
-@override
+  @override
   void initState() {
     super.initState();
     Auth.getUserLocal().then((user) {
@@ -26,27 +30,40 @@ class _PagamentoState extends State<Pagamento> {
       });
     });
   }
-  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: _buildAppBar(),
       drawer: CustomDrawer(),
       body: _buildBody(),
+      floatingActionButton: _buildFloatingActionButton(),
     );
   }
 
-
-   Widget _buildAppBar() {
+  Widget _buildAppBar() {
     return AppBar(
       title: Text('Pagamento'),
     );
   }
 
+  Widget _buildFloatingActionButton() {
+    return FloatingActionButton.extended(
+      label: Text('Cadastrar boleto'),
+      icon: Icon(Icons.money_off),
+      onPressed: _cadastrarBoleto,
+    );
+  }
+
+  Future _cadastrarBoleto() async {
+    await Navigator.of(context).pushNamed(BoletoCadastro.routeName);
+  }
+
   Widget _buildBody() {
-     return StreamBuilder<QuerySnapshot>(
+    if (_currentUser == null) return Common.progressContainer();
+    return StreamBuilder<QuerySnapshot>(
       stream: Firestore.instance
-          .collection('emprestimo')
+          .collection('boleto')
           .where('finderUserId', isEqualTo: _currentUser.userId)
           .snapshots(),
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
@@ -60,7 +77,7 @@ class _PagamentoState extends State<Pagamento> {
           case ConnectionState.done:
             if (snapshot.data.documents.length == 0)
               return Common.emptyContainer(
-                  message: "Nenhum empréstimo encontrado!");
+                  message: "Nenhum Boleto encontrado!");
             else
               return ListView(
                 children: snapshot.data.documents.map(_buildCard).toList(),
@@ -72,15 +89,15 @@ class _PagamentoState extends State<Pagamento> {
   }
 
   Widget _buildCard(document) {
-     _emprestimo = Emprestimo.fromDocument(document);
+    final boleto = Boleto.fromDocument(document);
     return ListTile(
-      title: Text(_emprestimo?.valor ?? ''),
-       onTap: _pagar,
-           );
-         }
-       
-       
-         void _pagar() {
-         _currentUser.saldo - _emprestimo.valor;
+      title: Text(boleto.title),
+      subtitle: Text("RS " + boleto.valor),
+      onTap: _pagar,
+    );
+  }
+
+  void _pagar(){
+    _currentUser.saldo - int.parse(_boleto.valor);
   }
 }

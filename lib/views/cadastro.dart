@@ -5,7 +5,7 @@ import 'package:projeto_teste/models/user.dart';
 
 class Cadastro extends StatefulWidget {
   static const String routeName = '/cadastro';
-
+  
   @override
   _CadastroState createState() => _CadastroState();
 }
