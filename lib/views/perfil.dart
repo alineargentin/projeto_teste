@@ -39,21 +39,20 @@ User _currentUser;
   }
 
    Widget _buildBody() {
-    return Container(
-      padding: EdgeInsets.all(10.0),
-      child: Form(
-        child: Column(
-          children: <Widget>[
-            _createNameTextField(),
-          ],
-        ),
-      ),
-    );
+    return new ListView.builder(itemBuilder: (BuildContext context, int index) {
+        return new Card(
+          child: new Column(children: <Widget>[
+            new Text(_currentUser.name),
+            new Text(_currentUser.email),
+            new Text(_currentUser.cpf),
+            new Text(_currentUser.phone),
+            new Text(_currentUser.saldo)],
+          ),
+        );
+      },
+);
   }
 
-  Widget _createNameTextField() {
-    return TextFormField(
-      decoration: InputDecoration(labelText: _currentUser.name , icon: Icon(Icons.person)),
-    );
-  }
+
+  
 }

@@ -7,7 +7,7 @@ class User {
   String email;
   String cpf;
   String phone;
-  int saldo = 1000;
+  String saldo;
 
   User({
     this.userId,

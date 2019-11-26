@@ -2,7 +2,7 @@ import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:projeto_teste/services/auth.dart';
 import 'package:projeto_teste/views/cadastro.dart';
-import 'package:projeto_teste/views/menu.dart';
+import 'package:projeto_teste/views/perfil.dart';
 
 
 class Login extends StatefulWidget {
@@ -87,7 +87,7 @@ Widget _showEmailTextField() {
   Future _onSignInSuccess(String userId) async {
     final user = await Auth.getUser(userId);
     await Auth.storeUserLocal(user);
-    Navigator.pushReplacementNamed(context, Menu.routeName);
+    Navigator.pushReplacementNamed(context, Perfil.routeName);
   }
 
   Widget _showSignInButton() {

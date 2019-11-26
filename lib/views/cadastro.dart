@@ -2,6 +2,7 @@ import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:projeto_teste/services/auth.dart';
 import 'package:projeto_teste/models/user.dart';
+import 'package:projeto_teste/views/login.dart';
 
 class Cadastro extends StatefulWidget {
   static const String routeName = '/cadastro';
@@ -16,7 +17,8 @@ class _CadastroState extends State<Cadastro> {
   final _passwordController = new TextEditingController();
   final _confirmPasswordController = new TextEditingController();
   final _phoneController = new TextEditingController();
-  final _cpfController = new TextEditingController();
+  final _cpfController = new TextEditingController(); 
+  final _saldoController = new TextEditingController();
 
   final _nameFocusNode = new FocusNode();
   final _emailFocusNode = new FocusNode();
@@ -24,6 +26,7 @@ class _CadastroState extends State<Cadastro> {
   final _confirmPasswordFocusNode = new FocusNode();
   final _phoneFocusNode = new FocusNode();
   final _cpfFocusNode = new FocusNode();
+  final _saldoFocusNode = new FocusNode();
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +43,9 @@ class _CadastroState extends State<Cadastro> {
               _showConfirmPasswordTextField(),
               _showPhoneTextField(),
               _showCPFTextField(),
+              _showSaldoTextField(),
               _showSignUpButton(),
+             
             ],
           ),
         ),
@@ -53,7 +58,7 @@ Widget _showNameTextField() {
        controller: _nameController,
       keyboardType: TextInputType.text,
       decoration: InputDecoration(
-        hintText: 'Nome',
+        hintText: 'Digite seu nome',
         prefixIcon: Icon(Icons.person),
       ),
       textInputAction: TextInputAction.next,
@@ -69,7 +74,7 @@ Widget _showNameTextField() {
       controller: _emailController,
       keyboardType: TextInputType.emailAddress,
       decoration: InputDecoration(
-        hintText: 'Email',
+        hintText: 'Digite seu email',
         prefixIcon: Icon(Icons.email),
       ),
       textInputAction: TextInputAction.next,
@@ -85,7 +90,7 @@ Widget _showNameTextField() {
       keyboardType: TextInputType.text,
       obscureText: true,
       decoration: InputDecoration(
-        hintText: 'Senha',
+        hintText: 'Digite uma senha',
         prefixIcon: Icon(Icons.vpn_key),
       ),
       textInputAction: TextInputAction.next,
@@ -101,7 +106,7 @@ Widget _showNameTextField() {
       keyboardType: TextInputType.text,
       obscureText: true,
       decoration: InputDecoration(
-        hintText: 'Confirmar senha',
+        hintText: 'Confirmar sua senha',
         prefixIcon: Icon(Icons.vpn_key),
       ),
       textInputAction: TextInputAction.next,
@@ -117,7 +122,7 @@ Widget _showPhoneTextField() {
       keyboardType: TextInputType.number,
       maxLength: 11,
       decoration: InputDecoration(
-        hintText: 'Celular',
+        hintText: 'Digite o numero do seu celular',
         prefixIcon: Icon(Icons.phone),
       ),
        textInputAction: TextInputAction.next,
@@ -133,11 +138,26 @@ Widget _showCPFTextField() {
       keyboardType: TextInputType.number,
       maxLength: 11,
       decoration: InputDecoration(
-        hintText: 'CPF',
+        hintText: 'Digite seu CPF',
         prefixIcon: Icon(Icons.description),
       ),
       textInputAction: TextInputAction.next,
       focusNode: _cpfFocusNode,
+       onEditingComplete: () =>
+          FocusScope.of(context).requestFocus(_saldoFocusNode)
+    );
+  }
+
+Widget _showSaldoTextField() {
+    return TextField(
+      controller: _saldoController,
+      keyboardType: TextInputType.number,
+      decoration: InputDecoration(
+        hintText: 'Digite o saldo',
+        prefixIcon: Icon(Icons.attach_money),
+      ),
+      textInputAction: TextInputAction.next,
+      focusNode: _saldoFocusNode,
     );
   }
 
@@ -160,7 +180,8 @@ Widget _showCPFTextField() {
     final name = _nameController.text;
     final phone = _phoneController.text;
     final cpf = _cpfController.text;
-    final user = User(userId: userId, name: name, email: email, phone: phone, cpf: cpf);
+    final saldo = _saldoController.text;
+    final user = User(userId: userId, name: name, email: email, phone: phone, cpf: cpf, saldo: saldo);
     Auth.addUser(user).then(_onResultAddUser);
   }
 
@@ -170,6 +191,7 @@ Widget _showCPFTextField() {
       message: 'Usuário registrado com sucesso!',
       duration: Duration(seconds: 2),
     )..show(context);
+    Navigator.of(context).pushReplacementNamed(Login.routeName);
   }
 
   Widget _showSignUpButton() {
